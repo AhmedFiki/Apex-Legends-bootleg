@@ -1,10 +1,12 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
-    public float health = 50f;
-
+    public float health;
+    public Image Healthbar;
+    public float MaxHealth;
 
 
 
@@ -40,5 +42,6 @@ public class Target : MonoBehaviour
     void Update()
     {
         
+        Healthbar.fillAmount = health / MaxHealth;
     }
 }
