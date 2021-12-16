@@ -30,6 +30,8 @@ public class Gun : MonoBehaviour
     }
         void Update()
     {
+
+    
         if (Input.GetButton("Fire1") && magAmmo > 0)
         {
             Shoot();
@@ -50,6 +52,8 @@ public class Gun : MonoBehaviour
             shootAudio.Play();
             muzzleFlash.Play();
             magAmmo--;
+
+
 
             if (Physics.Raycast(ShootPoint.position, ShootPoint.forward, out hit, weaponRange))
             {

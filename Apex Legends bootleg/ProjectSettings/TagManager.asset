@@ -10,6 +10,9 @@ TagManager:
   - CanGrab
   - Primary
   - Secondary
+  - PrimaryAmmo
+  - SecondaryAmmo
+  - HealthPickup
   layers:
   - Default
   - TransparentFX

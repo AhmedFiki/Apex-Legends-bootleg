@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
-    public float health;
-    public Image Healthbar;
-    public float MaxHealth;
+    public float health=100;
+     public Image Healthbar;
+    public float MaxHealth=100;
 
 
 
