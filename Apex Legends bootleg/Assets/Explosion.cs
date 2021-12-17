@@ -27,8 +27,7 @@ public class Explosion : MonoBehaviour
         //Debug.Log(collision.contacts[0].point.ToString());
         DoExplosion(collision.contacts[0].point);
         GameObject impactGO = Instantiate(impactExplosion, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
-        Destroy(impactGO, 2f);
-        Destroy(gameObject);
+       // Destroy(impactGO, 2f);
         explosionAudio.Play();
 
     }
