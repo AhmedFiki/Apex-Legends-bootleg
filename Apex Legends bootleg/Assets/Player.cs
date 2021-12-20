@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     }
     public void healthPickup()
     {
+        
         health += 25;
     }
     public void Die()

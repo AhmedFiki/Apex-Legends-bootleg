@@ -15,7 +15,7 @@ public class Launcher : MonoBehaviour
     private float nextFire;
 
     public ParticleSystem muzzleFlash;
-    public GameObject impactExplosion;
+   // public GameObject impactExplosion;
     //public GameObject impactSand;
     public AudioSource shootAudio;
     public AudioSource reloadAudio;
@@ -44,19 +44,22 @@ public class Launcher : MonoBehaviour
     }
 
 
+    
     void Shoot()
     {
-        if (Time.time > nextFire)
-        {
+        if (Time.time > nextFire && magAmmo>0)
+        {       GameObject gren = Instantiate(projectile, grenBarrel.position,grenBarrel.transform.rotation );
+                           gren.GetComponent<Rigidbody>().AddForce(grenBarrel.up * propForce, ForceMode.Impulse);
             nextFire = Time.time + rateOfFire;
             shootAudio.Play();
             muzzleFlash.Play();
             magAmmo--;
 
+            
+                
 
-            GameObject gren = Instantiate(projectile, grenBarrel.position,grenBarrel.transform.rotation );
-            gren.GetComponent<Rigidbody>().AddForce(grenBarrel.up * propForce, ForceMode.Impulse);
-
+           
+           Destroy(gren,6f);   
 
         }
     }

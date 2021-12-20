@@ -21,23 +21,25 @@ public class Explosion : MonoBehaviour
     {
         
     }
+   
 
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log(collision.contacts[0].point.ToString());
+        explosionAudio.Play();
         DoExplosion(collision.contacts[0].point);
         GameObject impactGO = Instantiate(impactExplosion, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
-       // Destroy(impactGO, 2f);
-        explosionAudio.Play();
+        Destroy(impactGO, 2f);
+        Destroy(gameObject, 1f);
 
     }
     void DoExplosion(Vector3 explosionPoint)
-    {
-        hitColliders = Physics.OverlapSphere(explosionPoint, blastRadius);
+    {       
 
-        foreach(Collider hitcol in hitColliders)
+        hitColliders = Physics.OverlapSphere(explosionPoint, blastRadius);
+        foreach (Collider hitcol in hitColliders)
         {
-            //Debug.Log(hitcol.gameObject.name);
+            Debug.Log(hitcol.gameObject.name);
             if (hitcol.GetComponent<Rigidbody>() != null && hitcol.gameObject.name !="FPSController")
             {
                 hitcol.GetComponent<Rigidbody>().isKinematic = false;
