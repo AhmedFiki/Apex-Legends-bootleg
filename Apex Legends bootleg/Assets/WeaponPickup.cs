@@ -12,7 +12,7 @@ public class WeaponPickup : MonoBehaviour
     public GameObject handgrenade;
     public GameObject handflame;
 
-
+    
 
     public GameObject rifle;
     public GameObject sniper;

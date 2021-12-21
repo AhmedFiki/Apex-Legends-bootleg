@@ -41,12 +41,14 @@ public class Player : MonoBehaviour
     {
     }
     
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.CompareTag("HealthPickup"))
         {
+            if (Input.GetKeyDown(KeyCode.E)) { 
             healthPickup();
             Destroy(collision.gameObject);
+            }
 
         }
     }

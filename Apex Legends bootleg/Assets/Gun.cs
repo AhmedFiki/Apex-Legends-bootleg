@@ -26,7 +26,8 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
-        
+        reserveAmmo = GetComponent<Ammo>().primaryAmmo;
+        Debug.Log(reserveAmmo);
     }
         void Update()
     {

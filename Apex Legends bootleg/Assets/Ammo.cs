@@ -10,7 +10,8 @@ public class Ammo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        primaryAmmo = 0;
+        secondaryAmmo = 0;
     }
 
     // Update is called once per frame
@@ -63,21 +64,34 @@ public class Ammo : MonoBehaviour
         addAmmo(false, 2);
     }
    
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
+
     {
+
         if (collision.gameObject.CompareTag("PrimaryAmmo"))
         {
-            primaryPickup();
-            Destroy(collision.gameObject);
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Picked Primary Ammo");
+
+                primaryPickup();
+                Destroy(collision.gameObject);
+            }
 
         }
         if (collision.gameObject.CompareTag("SecondaryAmmo"))
         {
-            secondaryPickup();
-            Destroy(collision.gameObject);
+            if (Input.GetKeyDown(KeyCode.E)){     
+                Debug.Log("Picked Secondary Ammo");
 
+                secondaryPickup();
+                Destroy(collision.gameObject);
+            }
         }
     }
+
+
 
 
 }
