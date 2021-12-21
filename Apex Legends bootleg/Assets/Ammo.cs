@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ammo : MonoBehaviour
 {
 
     public int primaryAmmo;
     public int secondaryAmmo;
+    public Text primaryText;
+    public Text SecondaryText;
+
     // Start is called before the first frame update
     void Start()
     {
-        primaryAmmo = 0;
-        secondaryAmmo = 0;
-    }
+        primaryAmmo = 69;
+        secondaryAmmo = 5;
+         primaryText.text = primaryAmmo.ToString();
+        SecondaryText.text = secondaryAmmo.ToString();
+}
 
     // Update is called once per frame
     void Update()
     {
+
+        primaryText.text = primaryAmmo.ToString();
+        SecondaryText.text = secondaryAmmo.ToString();
+
         if (primaryAmmo > 150)
             primaryAmmo = 150;
 
@@ -53,6 +63,15 @@ public class Ammo : MonoBehaviour
             secondaryAmmo -= amount;
 
         }
+    }
+
+    public int showPrimary()
+    {
+        return primaryAmmo;
+    } 
+    public int showSecondary()
+    {
+        return secondaryAmmo;
     }
 
     public void primaryPickup()

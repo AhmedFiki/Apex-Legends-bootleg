@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class Gun : MonoBehaviour
     public float damage;
     public int magAmmo;
     public int magMaxAmmo;
-    public int reserveAmmo;
+    private int reserveAmmo;
+    public Text magMaxText;
+    public Text MagText;
     public float impactForce=60f;
     //Rate Of Fire
     public float rateOfFire;
@@ -23,16 +26,23 @@ public class Gun : MonoBehaviour
     public GameObject impactSand;
     public AudioSource shootAudio;
     public AudioSource reloadAudio;
+    public GameObject player;
 
     void Start()
     {
-        reserveAmmo = GetComponent<Ammo>().primaryAmmo;
+        reserveAmmo = player.GetComponent<Ammo>().showPrimary();
         Debug.Log(reserveAmmo);
+
+        MagText.text = magAmmo.ToString();
+        magMaxText.text = magMaxAmmo.ToString();
     }
         void Update()
     {
+        reserveAmmo = player.GetComponent<Ammo>().showPrimary();
 
-    
+        MagText.text = magAmmo.ToString();
+        magMaxText.text = magMaxAmmo.ToString();
+
         if (Input.GetButton("Fire1") && magAmmo > 0)
         {
             Shoot();
@@ -80,16 +90,35 @@ public class Gun : MonoBehaviour
         if (reserveAmmo >= magMaxAmmo)
         {
             reloadAudio.Play();
+            player.GetComponent<Ammo>().addAmmo(true, magAmmo);
 
             magAmmo = magMaxAmmo;
             reserveAmmo -= magMaxAmmo;
+            player.GetComponent<Ammo>().subtractAmmo(true, magMaxAmmo);
         }else if (reserveAmmo > 0)
         {
+            int curr = magMaxAmmo - magAmmo;
+            if (reserveAmmo > curr)
+            {
+                reserveAmmo -= curr;
+                magAmmo = magMaxAmmo;
+                player.GetComponent<Ammo>().subtractAmmo(true, curr);
+
+            }
+            else
+            {               
+                player.GetComponent<Ammo>().subtractAmmo(true, reserveAmmo);  
+                magAmmo = magAmmo + reserveAmmo;
+
+                reserveAmmo = 0;
+
+            }
             reloadAudio.Play();
 
-            magAmmo = reserveAmmo;
-            reserveAmmo = 0;
-        }else
+          
+
+        }
+        else
         {
             Debug.Log("No Ammo!");
         }

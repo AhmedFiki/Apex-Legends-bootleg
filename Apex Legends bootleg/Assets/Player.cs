@@ -7,8 +7,9 @@ public class Player : MonoBehaviour
 {   
 
     public float health;
-   // public Image Healthbar;
+    public Image Healthbar;
     public float MaxHealth;
+    public Text HealthText;
 
   
 
@@ -21,6 +22,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Healthbar.fillAmount = health / MaxHealth;
+        HealthText.text = health.ToString() + "%";
+
         if (health > 100)
             health = 100;
     }

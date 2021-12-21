@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
+
 
 public class Launcher : MonoBehaviour
 {
@@ -8,7 +10,9 @@ public class Launcher : MonoBehaviour
     public float damage;
     public int magAmmo;
     public int magMaxAmmo;
-    public int reserveAmmo;
+    public Text magMaxText;
+    public Text MagText;
+    private int reserveAmmo;
     private float nextfire = 0;
     public float propForce;
     public float rateOfFire;
@@ -20,11 +24,16 @@ public class Launcher : MonoBehaviour
     public AudioSource shootAudio;
     public AudioSource reloadAudio;
     public Transform grenBarrel;
+    public GameObject player;
 
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+        reserveAmmo = player.GetComponent<Ammo>().showSecondary();
+
+        MagText.text = magAmmo.ToString();
+        magMaxText.text = magMaxAmmo.ToString();
         //  projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x + 90, projectile.transform.eulerAngles.y, projectile.transform.eulerAngles.z);
         // grenBarrel.transform.position = new Vector3(grenBarrel.transform.position.x, grenBarrel.transform.position.y, grenBarrel.transform.position.z - 1);
         rb = projectile.GetComponent<Rigidbody>();
@@ -32,7 +41,12 @@ public class Launcher : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
+        reserveAmmo = player.GetComponent<Ammo>().showSecondary();
+
+        MagText.text = magAmmo.ToString();
+        magMaxText.text = magMaxAmmo.ToString();
+
         if (Input.GetButton("Fire1") && magAmmo > 0)
         {
             Shoot();
@@ -68,22 +82,41 @@ public class Launcher : MonoBehaviour
         if (reserveAmmo >= magMaxAmmo)
         {
             reloadAudio.Play();
+            player.GetComponent<Ammo>().addAmmo(false, magAmmo);
 
             magAmmo = magMaxAmmo;
             reserveAmmo -= magMaxAmmo;
+            player.GetComponent<Ammo>().subtractAmmo(false, magMaxAmmo);
         }
         else if (reserveAmmo > 0)
         {
-           reloadAudio.Play();
+            int curr = magMaxAmmo - magAmmo;
+            if (reserveAmmo > curr)
+            {
+                reserveAmmo -= curr;
+                magAmmo = magMaxAmmo;
+                player.GetComponent<Ammo>().subtractAmmo(false, curr);
 
-            magAmmo = reserveAmmo;
-            reserveAmmo = 0;
+            }
+            else
+            {
+                player.GetComponent<Ammo>().subtractAmmo(false, reserveAmmo);
+                magAmmo = magAmmo + reserveAmmo;
+
+                reserveAmmo = 0;
+
+            }
+            reloadAudio.Play();
+
+
+
         }
         else
         {
             Debug.Log("No Ammo!");
         }
+
     }
-  
+
 }
 
