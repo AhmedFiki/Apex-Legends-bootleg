@@ -16,21 +16,29 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+      
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(health/MaxHealth);
         Healthbar.fillAmount = health / MaxHealth;
         HealthText.text = health.ToString() + "%";
 
         if (health > 100)
             health = 100;
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
     }
     public void TakeDamage(float amount)
     {
         health -= amount;
+        Healthbar.fillAmount = health / MaxHealth;
         if (health <= 0)
         {
             Die();
@@ -39,10 +47,12 @@ public class Player : MonoBehaviour
     public void healthPickup()
     {
         
-        health += 25;
+        health += 25; 
+        Healthbar.fillAmount = health / MaxHealth;
     }
     public void Die()
     {
+        Debug.Log("DEAD!");
     }
     
     private void OnTriggerStay(Collider collision)
