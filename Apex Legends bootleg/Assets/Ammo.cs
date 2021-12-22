@@ -10,6 +10,8 @@ public class Ammo : MonoBehaviour
     public int secondaryAmmo;
     public Text primaryText;
     public Text SecondaryText;
+    public Text notificationText;
+    private bool inside=false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +20,14 @@ public class Ammo : MonoBehaviour
         secondaryAmmo = 5;
          primaryText.text = primaryAmmo.ToString();
         SecondaryText.text = secondaryAmmo.ToString();
+        notificationText.text = "";
 }
 
     // Update is called once per frame
     void Update()
     {
+        if(!inside)
+            notificationText.text = "";
 
         primaryText.text = primaryAmmo.ToString();
         SecondaryText.text = secondaryAmmo.ToString();
@@ -82,33 +87,56 @@ public class Ammo : MonoBehaviour
     {
         addAmmo(false, 2);
     }
-   
+    
+    
+
+
     private void OnTriggerStay(Collider collision)
 
-    {
+    {                GameObject amm = collision.gameObject;
+
 
         if (collision.gameObject.CompareTag("PrimaryAmmo"))
-        {
+        {        inside= true;
 
-            if (Input.GetKeyDown(KeyCode.E))
+            notificationText.text = "Press 'E' to pickup Primary Ammo";
+            if (Input.GetKey(KeyCode.E))
             {
                 Debug.Log("Picked Primary Ammo");
 
                 primaryPickup();
-                Destroy(collision.gameObject);
+                Destroy(amm);
+                notificationText.text = "";
             }
 
         }
         if (collision.gameObject.CompareTag("SecondaryAmmo"))
         {
-            if (Input.GetKeyDown(KeyCode.E)){     
+            inside= true;
+
+            notificationText.text = "Press 'E' to pickup Secondary Ammo";
+
+            if (Input.GetKey(KeyCode.E)){     
                 Debug.Log("Picked Secondary Ammo");
 
                 secondaryPickup();
-                Destroy(collision.gameObject);
+                Destroy(amm);
+                notificationText.text = "";
+
             }
         }
     }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("PrimaryAmmo") || collision.gameObject.CompareTag("SecondaryAmmo"))
+        {
+
+            inside = false;
+
+
+        }
+        }
 
 
 

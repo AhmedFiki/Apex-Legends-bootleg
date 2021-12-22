@@ -28,6 +28,13 @@ public class Gun : MonoBehaviour
     public AudioSource reloadAudio;
     public GameObject player;
 
+    public Animator gunAnimator;
+    private bool isShooting = false;
+
+
+
+
+
     void Start()
     {
         reserveAmmo = player.GetComponent<Ammo>().showPrimary();
@@ -39,14 +46,22 @@ public class Gun : MonoBehaviour
         void Update()
     {
         reserveAmmo = player.GetComponent<Ammo>().showPrimary();
+        gunAnimator.SetBool("Shoot", isShooting);
 
         MagText.text = magAmmo.ToString();
         magMaxText.text = magMaxAmmo.ToString();
 
-        if (Input.GetButton("Fire1") && magAmmo > 0)
+        if (Input.GetMouseButton(0) && magAmmo > 0)
         {
+            isShooting = true;
             Shoot();
         }
+        if (Input.GetMouseButtonUp(0))
+        {
+            isShooting = false;
+
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             Reload();

@@ -20,7 +20,7 @@ public class GroundFire : MonoBehaviour
 
     private void OnTriggerStay(Collider collision)
     {
-        if (!onfire) { Debug.Log(collision.name);
+        if (!onfire) { 
 
                 onfire = true;
                 if (collision.gameObject.GetComponent<Target>() != null)

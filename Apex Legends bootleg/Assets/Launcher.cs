@@ -26,6 +26,12 @@ public class Launcher : MonoBehaviour
     public Transform grenBarrel;
     public GameObject player;
 
+    public Animator gunAnimator;
+    private bool isShooting = false;
+
+
+
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -43,14 +49,22 @@ public class Launcher : MonoBehaviour
     void Update()
     {
         reserveAmmo = player.GetComponent<Ammo>().showSecondary();
+        gunAnimator.SetBool("Shoot", isShooting);
 
         MagText.text = magAmmo.ToString();
         magMaxText.text = magMaxAmmo.ToString();
 
-        if (Input.GetButton("Fire1") && magAmmo > 0)
+        if (Input.GetMouseButtonDown(0) && magAmmo > 0)
         {
+            isShooting = true;
             Shoot();
         }
+        if (Input.GetMouseButtonUp(0))
+        {
+            isShooting = false;
+
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             Reload();

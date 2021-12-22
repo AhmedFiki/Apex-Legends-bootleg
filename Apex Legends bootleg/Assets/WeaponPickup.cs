@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponPickup : MonoBehaviour
 {
@@ -11,19 +12,24 @@ public class WeaponPickup : MonoBehaviour
     public GameObject flame;
     public GameObject handgrenade;
     public GameObject handflame;
+    public GameObject handgrenadeHUD;
+    public GameObject handflameHUD;
 
-    
+
 
     public GameObject rifle;
     public GameObject sniper;
     public GameObject shotgun;
     public GameObject handrifle;
     public GameObject handsniper;
-    public GameObject handshotgun;
+    public GameObject handshotgun; 
+    public GameObject handrifleHUD;
+    public GameObject handsniperHUD;
+    public GameObject handshotgunHUD;
     public GameObject nothing;
     public float distance=5f;
-    GameObject currentWeapon;
-    GameObject currentWeaponSecondary;
+    public GameObject currentWeapon;
+    public GameObject currentWeaponSecondary;
     GameObject wp;
 
     bool canGrab;
@@ -81,11 +87,11 @@ public class WeaponPickup : MonoBehaviour
     void Update()
     {
         
-            activeWeapon();
+           activeWeapon();
+        hudWeapon();
 
 
-
-
+        
 
         checkWeapons();
         if (canGrab)
@@ -180,4 +186,47 @@ public class WeaponPickup : MonoBehaviour
 
             }
         }
+
+    void hudWeapon()
+    {
+
+
+        if (currentWeapon == rifle)
+        {
+
+            handrifleHUD.SetActive(true);
+            handsniperHUD.SetActive(false);
+            handshotgunHUD.SetActive(false);
+
+        }
+        else if (currentWeapon == sniper)
+        {
+
+            handrifleHUD.SetActive(false);
+            handsniperHUD.SetActive(true);
+            handshotgunHUD.SetActive(false);
+        }
+        else if (currentWeapon == shotgun)
+        {
+
+            handrifleHUD.SetActive(false);
+            handsniperHUD.SetActive(false);
+            handshotgunHUD.SetActive(true);
+        }
+
+        if (currentWeaponSecondary == grenade)
+        {
+
+            handgrenadeHUD.SetActive(true);
+            handflameHUD.SetActive(false);
+
+        }
+        else if (currentWeaponSecondary == flame)
+        {
+
+            handgrenadeHUD.SetActive(false);
+            handflameHUD.SetActive(true);
+
+        }
+    }
 }
