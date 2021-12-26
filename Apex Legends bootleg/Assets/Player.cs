@@ -10,19 +10,24 @@ public class Player : MonoBehaviour
     public Image Healthbar;
     public float MaxHealth;
     public Text HealthText;
-    public int specialPoints;
+    public int specialPoints=100;
     public Image Specialbar;
     public GameObject Specialbarfull;
     private float MaxSpecial=100;
     public Text SpecialText;
     private bool inside = false;
-    public Text notificationText;
-
+    public GameObject ring;
+   // public GameObject shield;
+    public float ringForce;
+    public GameObject leftHand;
+    public AudioSource ping;
+    public bool invincible=false;
+    public string currentCharacter;
 
     // Start is called before the first frame update
     void Start()
     {
-        specialPoints = 0;
+        //specialPoints = 0;
         StartCoroutine(specialTimer());
 
     }
@@ -51,15 +56,27 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            specialPoints = 0;
-            Specialbarfull.SetActive(false);
+
+            if (currentCharacter.Equals("loba"))
+            {
+            lobaUlt();
+
+            }
+            else
+            {
+            bangUlt();
+            }
+
+            //specialPoints = 0;
+            //Specialbarfull.SetActive(false);
 
             //DoUltimate();
         }
     }
     public void TakeDamage(float amount)
     {
-        health -= amount;
+        if (!invincible) 
+            health -= amount;
         Healthbar.fillAmount = health / MaxHealth;
         if (health <= 0)
         {
@@ -77,21 +94,7 @@ public class Player : MonoBehaviour
         Debug.Log("DEAD!");
     }
   
-    private void OnTriggerStay(Collider collision)
-    { GameObject amm = collision.gameObject;
-        if (collision.gameObject.CompareTag("HealthPickup"))
-        {       
-                  inside = true;   
-            notificationText.text = "Press 'E' to pickup MedKit";
-
-            if (Input.GetKey(KeyCode.E))
-            {
-                healthPickup();
-                Destroy(amm); notificationText.text = "";
-            }
-
-        }
-    }
+    
     IEnumerator specialTimer()
     {
         if(specialPoints<100)
@@ -101,6 +104,23 @@ public class Player : MonoBehaviour
         StartCoroutine(specialTimer());
     }
 
-   
+    public void lobaUlt()
+    {
+        ping.Play();
+        GameObject projectile = Instantiate(ring, leftHand.transform.position, leftHand.transform.rotation);
+        projectile.GetComponent<Rigidbody>().AddForce(leftHand.transform.up * ringForce, ForceMode.Impulse);
+    }
+    public void bangUlt()
+    {
+        StartCoroutine(invincibleTimer());
+    }
+    IEnumerator invincibleTimer()
+    {
+        invincible = true;
+        yield return new WaitForSeconds(10f);
+        invincible = false;
+
 
     }
+
+}

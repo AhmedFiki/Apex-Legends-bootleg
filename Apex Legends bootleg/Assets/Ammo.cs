@@ -16,7 +16,7 @@ public class Ammo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        primaryAmmo = 69;
+        primaryAmmo = 150;
         secondaryAmmo = 5;
          primaryText.text = primaryAmmo.ToString();
         SecondaryText.text = secondaryAmmo.ToString();
@@ -100,7 +100,7 @@ public class Ammo : MonoBehaviour
         {        inside= true;
 
             notificationText.text = "Press 'E' to pickup Primary Ammo";
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("Picked Primary Ammo");
 
@@ -116,7 +116,7 @@ public class Ammo : MonoBehaviour
 
             notificationText.text = "Press 'E' to pickup Secondary Ammo";
 
-            if (Input.GetKey(KeyCode.E)){     
+            if (Input.GetKeyDown(KeyCode.E)){     
                 Debug.Log("Picked Secondary Ammo");
 
                 secondaryPickup();
@@ -125,11 +125,27 @@ public class Ammo : MonoBehaviour
 
             }
         }
+        if (collision.gameObject.CompareTag("HealthPickup"))
+        {
+            inside = true;
+
+            notificationText.text = "Press 'E' to pickup MedKit";
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Picked MedKit");
+
+                gameObject.GetComponent<Player>().healthPickup();
+                Destroy(amm);
+                notificationText.text = "";
+            }
+
+        }
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.CompareTag("PrimaryAmmo") || collision.gameObject.CompareTag("SecondaryAmmo"))
+        if (collision.gameObject.CompareTag("PrimaryAmmo") || collision.gameObject.CompareTag("SecondaryAmmo")|| collision.gameObject.CompareTag("HealthPickup"))
         {
 
             inside = false;

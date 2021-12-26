@@ -28,15 +28,15 @@ public class ExplosionFire : MonoBehaviour
     }
     
     private void OnCollisionEnter(Collision collision)
-    {   
+    {    explosionAudio.Play();
+        impactExplosionAudio.Play();
         //Debug.Log(collision.contacts[0].point.ToString());
         DoExplosion(collision.contacts[0].point);
         GameObject impactGO = Instantiate(impactExplosion, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].point));
         GameObject fireground1 = Instantiate(Fire1, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].point));
         GameObject fireground2 = Instantiate(Fire2, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].point));
         GameObject fireground3 = Instantiate(Fire3, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].point));
-        explosionAudio.Play();
-        impactExplosionAudio.Play();
+       
         //GameObject fireground= Instantiate(Fire, explosionPoint, Quaternion.LookRotation(explosionPoint));
 
         Destroy(impactGO, 5f);

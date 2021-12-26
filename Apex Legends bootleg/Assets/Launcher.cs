@@ -40,8 +40,7 @@ public class Launcher : MonoBehaviour
 
         MagText.text = magAmmo.ToString();
         magMaxText.text = magMaxAmmo.ToString();
-        //  projectile.transform.eulerAngles = new Vector3(projectile.transform.eulerAngles.x + 90, projectile.transform.eulerAngles.y, projectile.transform.eulerAngles.z);
-        // grenBarrel.transform.position = new Vector3(grenBarrel.transform.position.x, grenBarrel.transform.position.y, grenBarrel.transform.position.z - 1);
+       
         rb = projectile.GetComponent<Rigidbody>();
     }
 

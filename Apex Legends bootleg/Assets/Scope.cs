@@ -11,6 +11,7 @@ public class Scope : MonoBehaviour
     public Camera mainCam;
     public float scopedFOV = 15f;
     private float normalFOV;
+    public GameObject PrimaryContainer;
 
     // Update is called once per frame
     void Update()
@@ -44,6 +45,7 @@ public class Scope : MonoBehaviour
         scopeOverlay.SetActive(true);
         weaponCamera.SetActive(false);
         normalFOV = mainCam.fieldOfView;
-        mainCam.fieldOfView = scopedFOV;
+        if(PrimaryContainer.active)
+            mainCam.fieldOfView = scopedFOV;
     }
 }

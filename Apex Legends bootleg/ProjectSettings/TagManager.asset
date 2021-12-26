@@ -13,6 +13,7 @@ TagManager:
   - PrimaryAmmo
   - SecondaryAmmo
   - HealthPickup
+  - Shield
   layers:
   - Default
   - TransparentFX
