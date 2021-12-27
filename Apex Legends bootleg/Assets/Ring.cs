@@ -16,11 +16,28 @@ public class Ring : MonoBehaviour
     void Update()
     {
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        Debug.Log("enter col");
 
+        if (collision.gameObject.name != ("FPSController"))
+        {
+            Vector3 position = collision.gameObject.transform.position;
+            position.y += 5;
+            collision.gameObject.transform.position = position;
+
+            cc.enabled = false;
+
+            Player.gameObject.transform.position = position;
+            cc.enabled = true;
+            Destroy(gameObject);
+        }}
 
     private void OnTriggerEnter(Collider collision)
     {
         Debug.Log(collision.gameObject.name);
+        Debug.Log("enter triii");
 
         if (collision.gameObject.name != ("FPSController")) {
 

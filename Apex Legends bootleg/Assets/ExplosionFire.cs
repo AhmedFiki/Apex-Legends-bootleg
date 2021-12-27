@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class ExplosionFire : MonoBehaviour
 {
+
     public AudioSource explosionAudio;
+
     public AudioSource impactExplosionAudio;
     private Collider[] hitColliders;
     public float blastRadius;
@@ -28,8 +30,7 @@ public class ExplosionFire : MonoBehaviour
     }
     
     private void OnCollisionEnter(Collision collision)
-    {    explosionAudio.Play();
-        impactExplosionAudio.Play();
+    {    
         //Debug.Log(collision.contacts[0].point.ToString());
         DoExplosion(collision.contacts[0].point);
         GameObject impactGO = Instantiate(impactExplosion, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].point));
@@ -49,7 +50,9 @@ public class ExplosionFire : MonoBehaviour
     void DoExplosion(Vector3 explosionPoint)
     {
 
-                
+         explosionAudio.Play();
+        Debug.Log("played");
+        impactExplosionAudio.Play();       
 
 
     }
