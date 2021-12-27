@@ -23,9 +23,9 @@ public class Ring : MonoBehaviour
 
         if (collision.gameObject.name != ("FPSController"))
         {
-            Vector3 position = collision.gameObject.transform.position;
-            position.y += 5;
-            collision.gameObject.transform.position = position;
+            Vector3 position = collision.contacts[0].point;
+            position.y += 1;
+            
 
             cc.enabled = false;
 
@@ -34,33 +34,33 @@ public class Ring : MonoBehaviour
             Destroy(gameObject);
         }}
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        Debug.Log(collision.gameObject.name);
-        Debug.Log("enter triii");
+    //private void OnTriggerEnter(Collider collision)
+    //{
+    //    Debug.Log(collision.gameObject.name);
+    //    Debug.Log("enter triii");
 
-        if (collision.gameObject.name != ("FPSController")) {
+    //    if (collision.gameObject.name != ("FPSController")) {
 
-            cc.enabled = false;
+    //        cc.enabled = false;
 
-            Player.gameObject.transform.position = collision.transform.position;
-            cc.enabled = true;
-
-
-           /*Vector3 position = collision.gameObject.transform.position;
-            position.y += 5;
-            collision.gameObject.transform.position = position;
-
-            Player.SetActive(false);
+    //        Player.gameObject.transform.position = collision.transform.position;
+    //        cc.enabled = true;
 
 
+    //       /*Vector3 position = collision.gameObject.transform.position;
+    //        position.y += 5;
+    //        collision.gameObject.transform.position = position;
 
-            Player.transform.position = collision.gameObject.transform.position;
-            Player.SetActive(true);*/
+    //        Player.SetActive(false);
 
-            Destroy(gameObject);}
 
-    }
+
+    //        Player.transform.position = collision.gameObject.transform.position;
+    //        Player.SetActive(true);*/
+
+    //        Destroy(gameObject);}
+
+    //}
 
 
     void DoTeleport()
