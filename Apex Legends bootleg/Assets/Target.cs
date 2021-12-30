@@ -7,6 +7,7 @@ public class Target : MonoBehaviour
 {
     public float health=100;
      public Image Healthbar;
+    public GameObject HealthbarAll;
     public float MaxHealth=100;
     public Animator enemyAnimator;
     private int State = 0;
@@ -19,6 +20,7 @@ public class Target : MonoBehaviour
 
     public float timeBetweenAttacks;
     bool alreadyAttacked;
+    bool dead = false;
     //public GameObject projectile;
 
 
@@ -28,6 +30,7 @@ public class Target : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        setState(3);
         health -= amount;
         if (health <= 0)
         {
@@ -38,7 +41,10 @@ public class Target : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject);
+        setState(4);
+        dead = true;
+        HealthbarAll.SetActive(false);
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -49,17 +55,18 @@ public class Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        Healthbar.fillAmount = health / MaxHealth;
+        if (!dead)
+        {
+            Healthbar.fillAmount = health / MaxHealth;
 
 
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) setState(0);
-        if (playerInSightRange && !playerInAttackRange) setState(1);
-        if (playerInAttackRange && playerInSightRange) setState(2);
-
+            if (!playerInSightRange && !playerInAttackRange) setState(0);
+            if (playerInSightRange && !playerInAttackRange) setState(1);
+            if (playerInAttackRange && playerInSightRange) setState(2);
+        }
 
 
     }
@@ -73,10 +80,14 @@ public class Target : MonoBehaviour
             {
                 case 4:
                 //dead
-                    break;
+                enemyAnimator.SetInteger("State", n);
+
+                break;
                 case 3:
                 //staggering
-                    break;
+                enemyAnimator.SetInteger("State", n);
+
+                break;
                 case 2:
                 //shooting
                 agent.SetDestination(transform.position);
